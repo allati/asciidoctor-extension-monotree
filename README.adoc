@@ -1,0 +1,303 @@
+= Monotree
+
+== Description
+
+This extension visualizes tree-like structures. It takes names for a tree node and it's nesting level as an input and draws a tree as an output. Why use it if you practically create this tree already? This extension will account for different details which make it easier to grasp tree structure as a whole and which is tedious to update for every minor change in a tree.
+
+To create a tree you must add `[tree]` to a `listing` block. Every line in this block must begin with one or more `>` symbols, followed be a space and a node text. Number of `>` symbols correspond to this line's nesting level. Tree root has nesting level of 1.
+
+|====
+|Input |Output
+
+a|
+-----
+[tree]
+----
+> A
+>> B
+>>> C
+>>> D
+>> E
+>>> F
+>> G
+>> H
+----
+-----
+
+a|
+----
+A
+├── B
+│   ├── C
+│   └── D
+├── E
+│   └── F
+├── G
+└── H
+----
+|====
+
+== Installation
+
+This extension is available in link:https://bintray.com/bintray/jcenter[JCenter] repository. Since MonoTree is written in Java only AsciidoctorJ is supported.
+
+To use it you must add it to the classpath. In the case of Asciidoctor Maven plugin, it is enough to just add it as a dependency:
+
+[source, xml]
+----
+<plugin>
+	<groupId>org.asciidoctor</groupId>
+	<artifactId>asciidoctor-maven-plugin</artifactId>
+	<version>1.5.2</version>
+	<executions>
+		<execution>
+			<id>output-html</id>
+			<phase>generate-resources</phase>
+			<goals>
+				<goal>process-asciidoc</goal>
+			</goals>
+			<configuration>
+				<backend>html</backend>
+			</configuration>
+		</execution>
+	</executions>
+	<dependencies>
+		<dependency> <!--1-->
+			<groupId>com.github.allati.asciidoctor.monotree</groupId>
+			<artifactId>asciidoctor-extension-monotree</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+	</dependencies>
+</plugin>
+----
+
+<1> MonoTree extension is added
+
+== Configuration
+
+Every tree is built of 4 element types:
+
+* empty
+* passthrough
+* junction
+* terminal
+
+The purpose of every element is easier to show in example (to the right you can see tree elements separately for every line):
+
+----
+A
+├── B          "├── "
+│   └── C      "│   " "└── "
+└── D      =>  "└── "
+    ├── E      "    " "├── "
+    └── F      "    " "└── "
+----
+
+|====
+|Element type |Appearance
+
+|Empty
+m|{nbsp}{nbsp}{nbsp}
+
+|Passthrough
+m|│{nbsp}{nbsp}{nbsp}
+
+|Junction
+m|├──{nbsp}
+
+|terminal
+m|└──{nbsp}
+
+|====
+
+So, here is configuration parameters:
+
+symbol_empty (e)::
+defines value for element `empty`
+
+symbol_passthrough (p)::
+defines value for element `passthrough`
+
+symbol_junction (j)::
+defines value for element `junction`
+
+symbol_terminal (t)::
+defines value for element `terminal`
+
+symbols::
+defines symbol set to use (symbol set is a set all 4 elements that draws consistently looking tree).
+
+`symbol_`* parameters can be used together with `symbols`.
+
+This extension currently has two symbol sets defined:
+
+[cols="1,1,1"]
+|====
+
+|
+|*fancy* (default)
+|*simple*
+
+
+s|empty
+m|{nbsp}{nbsp}{nbsp}{nbsp}
+m|{nbsp}{nbsp}{nbsp}{nbsp}
+
+s|passthrough
+m|│{nbsp}{nbsp}{nbsp}
+m|\|{nbsp}{nbsp}{nbsp}
+
+s|junction
+m|├──{nbsp}
+m|+--{nbsp}
+
+s|terminal
+m|└──{nbsp}
+m|`--{nbsp}
+
+
+|====
+
+"Simple" set may not look as neatly as "fancy" one, but it uses basic characters that should be available in every font out there.
+
+=== Examples    
+
+[cols="1a,1a"]
+|====
+
+
+
+2+s|default
+
+|
+-----
+[tree]
+----
+> A
+>> B
+>>> C
+>> D
+>>> E
+>>> F
+----
+-----
+
+|
+----
+A
+├── B
+│   └── C
+└── D
+    ├── E
+    └── F
+----
+
+
+
+2+s| narrow
+
+|
+-----
+[tree, e="   ", p="│  ", j="├─ ", t="└─ "]
+----
+> A
+>> B
+>>> C
+>> D
+>>> E
+>>> F
+----
+-----
+
+|
+----
+A
+├─ B
+│  └─ C
+└─ D
+   ├─ E
+   └─ F
+----
+
+
+
+2+s| "Simple" symbol set
+
+|
+-----
+[tree, symbols="simple"]
+----
+> A
+>> B
+>>> C
+>> D
+>>> E
+>>> F
+----
+-----
+
+|
+----
+A
++-- B
+\|   `-- C
+`-- D
+    +-- E
+    `-- F
+----
+
+
+
+2+s| "Simple" symbol set with one element overridden
+
+|
+-----
+[tree, symbols="simple", t="\-- "]
+----
+> A
+>> B
+>>> C
+>> D
+>>> E
+>>> F
+----
+-----
+
+|
+----
+A
++-- B
+\|   \-- C
+\-- D
+    +-- E
+    \-- F
+----
+
+
+
+2+s| Empty root
+
+|
+-----
+[tree]
+----
+>> A
+>> B
+>>> C
+>> D
+>>> E
+>>> F
+----
+-----
+
+|
+----
+├── A
+├── B
+│   └── C
+└── D
+    ├── E
+    └── F
+----
+
+|====
