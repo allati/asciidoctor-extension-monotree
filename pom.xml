@@ -2,11 +2,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.allati.asciidoctor.monotree</groupId>
 	<artifactId>asciidoctor-extension-monotree</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<scm>
 		<developerConnection>scm:git:https://github.com/allati/asciidoctor-extension-monotree.git</developerConnection>
-	</scm>
+	  <tag>0.0.1</tag>
+  </scm>
 
 	<dependencies>
 		<dependency>
