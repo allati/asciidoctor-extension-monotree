@@ -43,7 +43,7 @@ This extension is available in link:https://bintray.com/bintray/jcenter[JCenter]
 
 To use it you must add it to the classpath.
 
-=== Mavan
+=== Maven
 In the case of Asciidoctor Maven plugin, it is enough to just add it as a dependency:
 
 [source, xml]
@@ -83,14 +83,15 @@ Just add the following lines to your build script:
 [source, groovy]
 ----
 plugins {
-  id "org.asciidoctor.convert" version "1.5.6" <1>
+  id "org.asciidoctor.convert" version "1.5.3" <1>
 }
 
 dependencies {
   asciidoctor 'com.github.allati.asciidoctor.monotree:asciidoctor-extension-monotree:0.0.1' <2>
 }
 ----
-<1> You should have this anyway (we tested MonoTree with 1.5.3, 1.5.6 and 1.5.7)
+<1> You should have this anyway (we tested MonoTree with 1.5.3 -> works fine, 1.5.6 and 1.5.7 have problems and often
+	complain about unknown style in listing blocks.)
 <2> The MonoTree extension
 
 
