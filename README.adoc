@@ -41,7 +41,10 @@ A
 
 This extension is available in link:https://bintray.com/bintray/jcenter[JCenter] repository. Since MonoTree is written in Java only AsciidoctorJ is supported.
 
-To use it you must add it to the classpath. In the case of Asciidoctor Maven plugin, it is enough to just add it as a dependency:
+To use it you must add it to the classpath.
+
+=== Maven
+In the case of Asciidoctor Maven plugin, it is enough to just add it as a dependency:
 
 [source, xml]
 ----
@@ -73,7 +76,26 @@ To use it you must add it to the classpath. In the case of Asciidoctor Maven plu
 
 <1> MonoTree extension is added
 
-== Configuration
+=== Gradle
+
+Just add the following lines to your build script:
+
+[source, groovy]
+----
+plugins {
+  id "org.asciidoctor.convert" version "1.5.3" <1>
+}
+
+dependencies {
+  asciidoctor 'com.github.allati.asciidoctor.monotree:asciidoctor-extension-monotree:0.0.1' <2>
+}
+----
+<1> You should have this anyway (we tested MonoTree with 1.5.3 -> works fine, 1.5.6 and 1.5.7 have problems and often
+	complain about unknown style in listing blocks.)
+<2> The MonoTree extension
+
+
+== Configuration and Usage
 
 Every tree is built of 4 element types:
 
@@ -83,6 +105,9 @@ Every tree is built of 4 element types:
 * terminal
 
 The purpose of every element is easier to show in example (to the right you can see tree elements separately for every line):
+
+Please note: In version 0.0.1, every line in a tree is expected to start
+with the letter '>' - otherwise an exception is thrown.
 
 ----
 A
@@ -160,7 +185,7 @@ m|`--{nbsp}
 
 "Simple" set may not look as neatly as "fancy" one, but it uses basic characters that should be available in every font out there.
 
-=== Examples    
+=== Examples
 
 [cols="1a,1a"]
 |====
