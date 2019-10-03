@@ -1,19 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.allati.asciidoctor.monotree</groupId>
 	<artifactId>asciidoctor-extension-monotree</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
+	<name>Asciidoctor Extension Monotree</name>
+	<description />
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
 	<scm>
+		<url>https://github.com/allati/asciidoctor-extension-monotree</url>
+		<connection>scm:git:https://github.com/allati/asciidoctor-extension-monotree.git</connection>
 		<developerConnection>scm:git:https://github.com/allati/asciidoctor-extension-monotree.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>master</tag>
+	</scm>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/allati/asciidoctor-extension-monotree/issues</url>
+	</issueManagement>
+
+	<properties>
+		<!-- General Settings -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Build relevant information -->
+		<java.version>1.7</java.version>
+		<maven.api.minimum>3.6.0</maven.api.minimum>
+		<maven.api.version>3.6.1</maven.api.version>
+
+		<!-- Dependencies -->
+		<asciidoctorj.version>2.1.0</asciidoctorj.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.asciidoctor</groupId>
 			<artifactId>asciidoctorj</artifactId>
-			<version>1.5.2</version>
+			<version>${asciidoctorj.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
@@ -21,18 +54,27 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
+				<version>2.5.3</version>
 			</plugin>
 		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>UTF-8</encoding>
+						<showDeprecation>true</showDeprecation>
+						<showWarnings>true</showWarnings>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
