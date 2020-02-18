@@ -4,19 +4,16 @@
 	<artifactId>asciidoctor-extension-monotree</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 
-	<scm>
-		<developerConnection>scm:git:https://github.com/allati/asciidoctor-extension-monotree.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+	<parent>
+		<groupId>com.uniqueck.asciidoctorj</groupId>
+		<artifactId>asciidoctorj-extension-parent</artifactId>
+		<version>0.0.1-alpha.4</version>
+	</parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.asciidoctor</groupId>
-			<artifactId>asciidoctorj</artifactId>
-			<version>1.5.2</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<build>
 		<plugins>
@@ -24,15 +21,33 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
 			</plugin>
 		</plugins>
 	</build>
+
+
+	<repositories>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-uniqueck-asciidoctorj</id>
+			<name>bintray</name>
+			<url>https://dl.bintray.com/uniqueck/asciidoctorj</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>bintray-uniqueck-asciidoctorj</id>
+			<name>bintray-plugins</name>
+			<url>https://dl.bintray.com/uniqueck/asciidoctorj</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 </project>

@@ -1,20 +1,16 @@
 package com.github.allati.asciidoctor.tree;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
-
-import org.asciidoctor.ast.AbstractBlock;
+import org.asciidoctor.ast.StructuralNode;
 import org.asciidoctor.extension.BlockProcessor;
+import org.asciidoctor.extension.Contexts;
+import org.asciidoctor.extension.Name;
 import org.asciidoctor.extension.Reader;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
+@Name("monotree")
 public class MonoTreeProcessor extends BlockProcessor {
 
 	public static final String OPT_SYMBOL_EMPTY = "symbol_empty";
@@ -51,7 +47,7 @@ public class MonoTreeProcessor extends BlockProcessor {
 	}
 
 	private static Map<String, Object> appendConfig(Map<String, Object> config) {
-		config.put("contexts", Arrays.asList(":listing"));
+		config.put(Contexts.KEY, Arrays.asList(Contexts.EXAMPLE, Contexts.LISTING, Contexts.QUOTE));
 		return config;
 	}
 
@@ -61,11 +57,6 @@ public class MonoTreeProcessor extends BlockProcessor {
 			enumMap.put(state, props.getProperty(setName + "." + state.name()));
 		}
 		return enumMap;
-	}
-
-	@Override
-	public Map<Object, Object> getConfig() {
-		return super.getConfig();
 	}
 
 	private Map<LaneState, String> createSymbolSet(Map<String, Object> attributes) {
@@ -97,8 +88,9 @@ public class MonoTreeProcessor extends BlockProcessor {
 		}
 	}
 
+
 	@Override
-	public Object process(AbstractBlock parent, Reader reader, Map<String, Object> attributes) {
+	public Object process(StructuralNode parent, Reader reader, Map<String, Object> attributes) {
 		List<TreeLine> treeLines = new ArrayList<>();
 		for (String line : reader.readLines()) {
 			int offset = computeLevel(line);
