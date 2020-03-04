@@ -1,14 +1,13 @@
 package com.github.allati.asciidoctor.tree;
 
-import org.asciidoctor.Asciidoctor;
+import com.uniqueck.asciidoctorj.extension.support.AbstractAsciidoctorjExtensionRegistry;
 import org.asciidoctor.extension.JavaExtensionRegistry;
-import org.asciidoctor.extension.spi.ExtensionRegistry;
 
-public class MonoTreeExtension implements ExtensionRegistry {
+public class MonoTreeExtension extends AbstractAsciidoctorjExtensionRegistry {
 
 	@Override
-	public void register(Asciidoctor asciidoctor) {
-		JavaExtensionRegistry javaExtensionRegistry = asciidoctor.javaExtensionRegistry();
-		javaExtensionRegistry.block("tree", MonoTreeProcessor.class);
+	protected void registerExtension(JavaExtensionRegistry javaExtensionRegistry) {
+		javaExtensionRegistry.block(MonoTreeProcessor.class);
 	}
+
 }
